@@ -9,8 +9,9 @@ import { Link } from "react-router-dom";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import {withRouter} from './withRouter';
 
-export default class CreateRoomPage extends Component {
+class CreateRoomPage extends Component {
   defaultVotes = 2;
 
   constructor(props) {
@@ -24,6 +25,7 @@ export default class CreateRoomPage extends Component {
     this.handleVotesChange = this.handleVotesChange.bind(this);
     this.handleGuestCanPauseChange = this.handleGuestCanPauseChange.bind(this);
   }
+  
 
   handleVotesChange(e) {
     this.setState({
@@ -48,7 +50,7 @@ export default class CreateRoomPage extends Component {
     };
     fetch("/api/create-room/", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) =>  this.props.navigate("/room/" + data.code));
   }
 
   render() {
@@ -119,3 +121,5 @@ export default class CreateRoomPage extends Component {
     );
   }
 }
+
+export default withRouter(CreateRoomPage);
